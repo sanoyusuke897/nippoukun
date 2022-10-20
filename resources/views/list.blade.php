@@ -114,24 +114,6 @@ $(function() {
 
 
             let dailies = data.dailies;
-            // for(var i=0; i<dailies.length; i++) {
-            //     let id = dailies[i].id;
-            //     let created_at = dailies[i].created_at;
-
-            //     urllink (id);
-            //     let html = `
-            //             <tr>
-            //                 <th scope="row"> ${created_at} 日</th>
-            //                 <td><span class="badge rounded-pill bg-success">提出済み</span></td>
-            //                 <td>${created_at}</td>
-            //                 <td class="text-end"><a href="${dailydetailurl}">詳細</a> | <a href="{{route('copy_create', [$daily['id']])}}">コピーして作成</a></td>
-            //             </tr>
-            //         `;
-
-            //     daily_list_add (html);
-            // }
-
-
 
             let html = `
             <table class="table mt-5">
@@ -153,7 +135,7 @@ $(function() {
                 html += "<td>" + item.id + "日</td>";
                 html += `<td><span class="badge rounded-pill bg-success">提出済み</span></td>`;
                 html += "<td>" + item.created_at + "</td>";
-                html += `<td class="text-end"><a href="daily_detail/${item.id}">詳細</a> | <a href='{{route('copy_create', [$daily['id']])}}'>コピーして作成</a></td>`;
+                html += `<td class="text-end"><a href="daily_detail/${item.id}">詳細</a> | <a href='{{route('copy_create', [$dailies['id']])}}'>コピーして作成</a></td>`;
                 html += "</tr>";
             }
 
