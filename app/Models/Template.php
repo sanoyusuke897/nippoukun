@@ -8,13 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Template extends Model
 {
     use HasFactory;
-    // protected $fillable = [
-    //     'user_id',
-    //     'template_title',
-    //     'template_content',
-    // ];
-
-    protected $table = 'templates';
+    protected $fillable = [
+        'user_id',
+        'template_title',
+        'template_content',
+    ];
 
     protected $casts = [
         'created_at' => 'datetime:Y-m-d（H:i:s）',
