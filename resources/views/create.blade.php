@@ -43,7 +43,7 @@
                     <div class="col-sm-10">
                         <select class="form-select" aria-label="Default select example" id="templete">
                             <option value="">使わない</option>
-                            @foreach ($templates as $template)
+                            @foreach ($template as $template)
                             <option value="{{ $template->template_content }}">{{ $template->template_title }}</option>
                             @endforeach
                         </select>
