@@ -12,7 +12,7 @@ class CreateController extends Controller
 {
     public function index()
     {
-        $templates = auth()->user()->template;
+        $templates = auth()->user()->templates;
         $drafts = auth()->user()->drafts->count();
         return view('create', compact("templates", "drafts"));
     }
