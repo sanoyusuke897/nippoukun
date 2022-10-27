@@ -11,7 +11,8 @@
 <div class="bg-white p-5 mt-4">
 
     <select class="form-select" aria-label="Default select example" id="month" name="month">
-        <option selected value="9">2022年9月の提出履歴</option>
+        <option selected value="10">2022年10月の提出履歴</option>
+        <option value="9">2022年9月の提出履歴</option>
         <option value="8">2022年8月の提出履歴</option>
         <option value="7">2022年7月の提出履歴</option>
         <option value="6">2022年6月の提出履歴</option>
