@@ -135,7 +135,7 @@ $(function() {
                 html += "<td>" + item.id + "日</td>";
                 html += `<td><span class="badge rounded-pill bg-success">提出済み</span></td>`;
                 html += "<td>" + item.created_at + "</td>";
-                html += `<td class="text-end"><a href="daily_detail/${item.id}">詳細</a> | <a href='{{route('copy_create', [$dailies['id']])}}'>コピーして作成</a></td>`;
+                html += `<td class="text-end"><a href="daily_detail/${item.id}">詳細</a> | <a href='{{route('copy_create', [$daily['id']])}}'>コピーして作成</a></td>`;
                 html += "</tr>";
             }
 
