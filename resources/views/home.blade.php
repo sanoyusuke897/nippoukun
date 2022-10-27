@@ -13,7 +13,7 @@
 
         <div class="col-lg-2 col-sm-12"></div>
         <div class="col-lg-8 col-sm-12 mt-5 mb-5">
-            <p class="fw-bold">▼<?php $user = Auth::user(); ?>{{ $user->department }}ののの週間提出状況</p>
+            <p class="fw-bold">▼<?php $user = Auth::user(); ?>{{ $user->department }} 週間提出状況</p>
             <table class="table table-bordered text-center">
                 <thead class="table-bordered">
                     <tr>
@@ -82,12 +82,35 @@
 
             </table>
             <p class="text-end small"><span style="color:#00FF2A">●</span> 出勤中 / <span style="color:#ccc">●</span> 退勤中 / <span style="color:red">●</span> 打刻忘れ</p>
-            <p class="fw-bold mt-5">▼<?php $user = Auth::user(); ?>{{ $user->department }}のタイムライン</p>
-<ul>
-    <li>19:20:17 深谷洋介さんが日報を提出しました。</li>
-    <li>09:20:28 佐野祐介さんが出勤しました。</li>
-    <li>09:01:36 青木琴音さんが出勤しました。</li>
-</ul>
+            <p class="fw-bold mt-5">▼<?php $user = Auth::user(); ?>{{ $user->department }} のタイムライン</p>
+
+<div class="list-group">
+    <div class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <p class="mb-1"><i class="bi bi-person-fill"></i> 深谷洋介 さんが日報を提出しました。</p>
+        <small class="text-muted">19:20:17</small>
+      </div>
+    </div>
+    <div class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <p class="mb-1"><i class="bi bi-person-fill"></i> 佐野祐介 さんが出勤しました。</p>
+          <small class="text-muted">19:20:17</small>
+        </div>
+      </div>
+      <div class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <p class="mb-1"><i class="bi bi-person-fill"></i> 青木琴音 さんが出勤しました。</p>
+          <small class="text-muted">09:01:36</small>
+        </div>
+      </div>
+      <div href="#" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <p class="mb-1"><i class="bi bi-person-fill"></i> 市川良樹 さんが出勤しました。</p>
+          <small class="text-muted">08:50:36</small>
+        </div>
+      </div>
+  </div>
+<!--
 <form method="GET" action="" onsubmit="return false">
 <input type="text" class="efo">
 <button type="submit" id="wordbtn">send</button>
@@ -98,6 +121,7 @@
     <input type="text" class="telform_classname" name="telform">
     <button type="submit" class="telformbtn">送信</button>
 </form>
+-->
         </div>
         <div class="col-lg-2 col-sm-12"></div>
 
