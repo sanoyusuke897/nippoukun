@@ -25,6 +25,9 @@ class HomeController extends Controller
     public function index()
     {
         $users=User::all();
-        return view('home', compact('users'));
+
+        $departmentusers = User::all();
+        return view('home', compact('departmentusers','users'));
     }
+
 }

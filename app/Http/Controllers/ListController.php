@@ -14,7 +14,8 @@ class ListController extends Controller
         //$dailies = auth()->user()->dailies;
         //$dailies = Dailies::orderBy('created_at','desc')->get(); //all();はありえない where条件
         //$dailies = auth()->user()->dailies;
-        $dailies = Dailies::query()->where('user_id', auth()->user()->id)->whereMonth('created_at', '10')->latest()->get();
+        $current_month = date('m');
+        $dailies = Dailies::query()->where('user_id', auth()->user()->id)->whereMonth('created_at', $current_month)->latest()->get();
 
 
         return view('list', compact("dailies"));

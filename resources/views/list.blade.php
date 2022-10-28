@@ -11,11 +11,11 @@
 <div class="bg-white p-5 mt-4">
 
     <select class="form-select" aria-label="Default select example" id="month" name="month">
-        <option selected value="10">2022年10月の提出履歴</option>
-        <option value="9">2022年9月の提出履歴</option>
+        <option selected value="10">2022年<?php echo date('m'); ?>月の提出履歴</option>
+        <!--<option value="9">2022年9月の提出履歴</option>
         <option value="8">2022年8月の提出履歴</option>
         <option value="7">2022年7月の提出履歴</option>
-        <option value="6">2022年6月の提出履歴</option>
+        <option value="6">2022年6月の提出履歴</option>-->
       </select>
 
 
@@ -34,7 +34,8 @@
 <script>
 $(function() {
 
-    //-------月別を取得------//
+
+
 
 
 
@@ -58,7 +59,7 @@ $(function() {
                 <tbody>
                 @foreach($dailies as $daily)
                 <tr>
-                    <th scope="row">{{ $daily->id}} 日</th>
+                    <th scope="row">{{ $daily->created_at}}</th>
                     <td><span class="badge rounded-pill bg-success">提出済み</span></td>
                     <td>{{ $daily->created_at}}</td>
                     <td class="text-end"><a href="{{route('daily_detail', [$daily['id']])}}">詳細</a> | <a href="{{route('copy_create', [$daily['id']])}}">コピーして作成</a></td>
@@ -68,6 +69,20 @@ $(function() {
             </table>
         `;
     }
+
+    //-------月別を取得------//
+    var ct = new Date();
+    var res = ct.getMonth()+1;
+
+    console.log(res);
+
+    function MonthDefault (){
+        $("[name=month]").val(res);
+    }
+
+    console.log(MonthDefault);
+
+    MonthDefault();
 
     //------月別提出履歴（デフォルト）-----//
     function ListDefault (){
@@ -133,7 +148,7 @@ $(function() {
 
                 console.log(item.date)
                 html += "<tr>";
-                html += "<td>" + item.id + "日</td>";
+                html += "<td>" + item.created_at + "</td>";
                 html += `<td><span class="badge rounded-pill bg-success">提出済み</span></td>`;
                 html += "<td>" + item.created_at + "</td>";
                 html += `<td class="text-end"><a href="daily_detail/${item.id}">詳細</a> | <a href="copy_create/${item.id}">コピーして作成</a></td>`;

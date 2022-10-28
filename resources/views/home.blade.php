@@ -13,23 +13,36 @@
 
         <div class="col-lg-2 col-sm-12"></div>
         <div class="col-lg-8 col-sm-12 mt-5 mb-5">
+
             <p class="fw-bold">▼<?php $user = Auth::user(); ?>{{ $user->department }} 週間提出状況</p>
             <table class="table table-bordered text-center">
                 <thead class="table-bordered">
                     <tr>
                       <th scope="col">氏名</th>
-                      <th scope="col">20（月）</th>
-                      <th scope="col">21（火）</th>
-                      <th scope="col">22（水）</th>
-                      <th scope="col">23（木）</th>
-                      <th scope="col">24（金）</th>
-                      <th scope="col" class="table-secondary">25（土）</th>
-                      <th scope="col" class="table-secondary">26（日）</th>
+                      <th scope="col">
+                        <!--<?php
+                        $targetDate = 'd';
+                        for($i=0;$i<7;$i++){
+                            echo date("d",strtotime("+{$i} day",strtotime($targetDate)))."\n";
+                        }
+                        ?>-->
+                        24（月）</th>
+                      <th scope="col">25（火）</th>
+                      <th scope="col">26（水）</th>
+                      <th scope="col">27（木）</th>
+                      <th scope="col">28（金）</th>
+                      <th scope="col" class="table-secondary">29（土）</th>
+                      <th scope="col" class="table-secondary">30（日）</th>
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach ($departmentusers as $departmentuser)
                     <tr>
-                      <th scope="row">金本</th>
+
+                      <th scope="row">
+
+                         {{ $departmentuser->name }}
+                        </th>
                       <td><a href="#">◯</a></td>
                       <td>◯</td>
                       <td>◯</td>
@@ -38,46 +51,7 @@
                       <td></td>
                       <td></td>
                     </tr>
-                    <tr>
-                      <th scope="row">市川</th>
-                      <td>◯</td>
-                      <td>◯</td>
-                      <td>◯</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">青木</th>
-                      <td>◯</td>
-                      <td>◯</td>
-                      <td>◯</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">深谷</th>
-                        <td>◯</td>
-                        <td>◯</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">佐野</th>
-                        <td>◯</td>
-                        <td class="table-danger"><span class="text-danger">△</span></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
+                    @endforeach
                   </tbody>
 
             </table>
