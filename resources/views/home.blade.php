@@ -12,27 +12,20 @@
         </div>
 
         <div class="col-lg-2 col-sm-12"></div>
-        <div class="col-lg-8 col-sm-12 mt-5 mb-5">
+        <div class="col-lg-8 col-sm-12 mt-5 mb-5 dateSlide">
 
             <p class="fw-bold">▼<?php $user = Auth::user(); ?>{{ $user->department }} 週間提出状況</p>
-            <table class="table table-bordered text-center">
+            <table class="table table-bordered text-center bg-white">
                 <thead class="table-bordered">
-                    <tr>
-                      <th scope="col">氏名</th>
-                      <th scope="col">
-                        <!--<?php
-                        $targetDate = 'd';
-                        for($i=0;$i<7;$i++){
-                            echo date("d",strtotime("+{$i} day",strtotime($targetDate)))."\n";
-                        }
-                        ?>-->
-                        24（月）</th>
-                      <th scope="col">25（火）</th>
-                      <th scope="col">26（水）</th>
-                      <th scope="col">27（木）</th>
-                      <th scope="col">28（金）</th>
-                      <th scope="col" class="table-secondary">29（土）</th>
-                      <th scope="col" class="table-secondary">30（日）</th>
+                    <tr class="dateSlideList">
+                      <td scope="col" class="fw-bolder">氏名</td>
+                      <th scope="col" class="date01"><sub>（月）</sub></th>
+                      <th scope="col" class="date02"><sub>（火）</sub></th>
+                      <th scope="col" class="date03"><sub>（水）</sub></th>
+                      <th scope="col" class="date04"><sub>（木）</sub></th>
+                      <th scope="col" class="date05"><sub>（金）</sub></th>
+                      <th scope="col" class="table-secondary date06"><sub>（土）</sub></th>
+                      <th scope="col" class="table-secondary date07"><sub>（日）</sub></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -40,7 +33,6 @@
                     <tr>
 
                       <th scope="row">
-
                          {{ $departmentuser->name }}
                         </th>
                       <td><a href="#">◯</a></td>
@@ -108,53 +100,19 @@
 </div>
 
 <script>
+//-----------日付表示-----------//
+$(function(){
+  var now = new Date();
+  var wd = ['日', '月', '火', '水', '木', '金', '土'];
 
-var EFOvals = {
-    '20': function(val, regex) { // 正規表現と一致
-        try { // 11 ここが問題
-            if(val.match(regex)) return true; // 12　一致した！！trueを返す→4へGO！（しかし、13へ行った。一致しなかった？console反映されてない）
-            console.log(val);
-            console.log(regex);
-        } catch(err) {} // 13
-        return false; // 14
-    }
-};
-
-function NgWords (val, words) {
-    var bool = true;
-    try { // 1
-        words = words.split('|'); // 2
-        $.each(words, function (index, elem){ // 3
-            if(EFOvals['20'](val, words[index])) {  // 4 trueを受け取って、そのまま→5へ↓
-                bool = false;  // 5
-                console.log(bool);
-                return false;  // 6
-            }  // 7
-            console.log(bool);
-        }); // 8
-    } catch(err) {} // 9
-    return bool; // 10
-};
-
-$('#wordbtn').click(function() {
-
-    var val = $('.efo').val();
-    var words = "\,|'|\"|\\\\";    // 3番目の「\\」がmatchしない
-    let html = NgWords(val, words);
-
-    alert(html);
-
+  $('.dateSlideList th').text(function(){
+    var m=now.getMonth()+1;
+    var d=now.getDate();
+    var w=wd[now.getDay()];
+    now.setDate(now.getDate()+1);
+    return m+"/"+d+"("+w+")";
+  });
 });
-
-//-----------正規表現-----------//
-$('.telformbtn').click(function() {
-		var telform = $(this).parent().children('.telform_classname').val();
-		if (telform.match( /^[a-zA-Z0-9!-/:-@¥[-`{-~ +]*$/ )) {
-			alert("OK");
-		} else {
-			alert("NO");
-		};
-	});
 
 </script>
 @endsection
