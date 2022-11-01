@@ -30,25 +30,26 @@
                   </thead>
                   <tbody>
                     @foreach ($departmentusers as $departmentuser)
-                    <tr>
+                    <tr class="repotlist">
 
                       <th scope="row">
                          {{ $departmentuser->name }}
                         </th>
-                      <td><a href="#">◯</a></td>
-                      <td>◯</td>
-                      <td>◯</td>
                       <td></td>
                       <td></td>
                       <td></td>
                       <td></td>
+                      <td></td>
+                      <td class="bg-light">-</td>
+                      <td class="bg-light">-</td>
                     </tr>
                     @endforeach
                   </tbody>
 
             </table>
             <p class="text-end small"><span style="color:#00FF2A">●</span> 出勤中 / <span style="color:#ccc">●</span> 退勤中 / <span style="color:red">●</span> 打刻忘れ</p>
-            <p class="fw-bold mt-5">▼<?php $user = Auth::user(); ?>{{ $user->department }} のタイムライン</p>
+
+            <!--<p class="fw-bold mt-5">▼<?php $user = Auth::user(); ?>{{ $user->department }} のタイムライン</p>
 
 <div class="list-group">
     <div class="list-group-item list-group-item-action">
@@ -75,7 +76,7 @@
           <small class="text-muted">08:50:36</small>
         </div>
       </div>
-  </div>
+  </div>-->
 <!--
 <form method="GET" action="" onsubmit="return false">
 <input type="text" class="efo">
@@ -113,6 +114,52 @@ $(function(){
     return m+"/"+d+"("+w+")";
   });
 });
+
+//-----------レポート表示-----------//
+
+// let reports = reports;
+
+// for (let item of reports) {
+//     console.log(item)
+// }
+
+// function HomeReportDefault (){
+//     $('.repotlist td').text(function(){
+//         return "report!";
+//     })
+// }
+
+// HomeReportDefault();
+
+function HomeReportDefault (){
+    $.ajax({
+        type:'POST',
+        url:'{{ route('home_default') }}',
+        dataType:'json',
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    })
+    .done(function(data) {
+
+        console.log("default OK!");
+        let reports = data.reports;
+
+        let html = `○`;
+
+        for (let item of reports) {
+            console.log(item.date)
+        }
+
+
+        $('.repotlist td').text(function(){
+        return html;
+        })
+    })
+    .fail(function (data) {
+        alert("error");
+    })
+};
+
+HomeReportDefault();
 
 </script>
 @endsection

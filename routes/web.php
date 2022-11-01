@@ -28,6 +28,7 @@ Route::get('/create_confirm', [App\Http\Controllers\CreateConfirmController::cla
 Route::post('/create_complete', [App\Http\Controllers\CreateCompleteController::class, 'index'])->name('create_complete');
 Route::get('/list', [App\Http\Controllers\ListController::class, 'index'])->name('list');
 Route::post('/list_default', [App\Http\Controllers\ListController::class, 'list_default'])->name('list_default');
+Route::post('/home_default', [App\Http\Controllers\HomeController::class, 'home_default'])->name('home_default');
 Route::get('/daily', [App\Http\Controllers\DailyController::class, 'index'])->name('daily');
 Route::get('/template', [App\Http\Controllers\TemplateController::class, 'index'])->name('template');
 Route::get('/template_create', [App\Http\Controllers\TemplateCreateController::class, 'index'])->name('template_create');

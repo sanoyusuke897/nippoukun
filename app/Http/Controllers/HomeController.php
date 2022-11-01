@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Report;
 
 class HomeController extends Controller
 {
@@ -28,6 +29,13 @@ class HomeController extends Controller
 
         $departmentusers = User::all();
         return view('home', compact('departmentusers','users'));
+    }
+
+    public function home_default(Request $request)
+    {
+        $reports = Report::query()->where('user_id', auth()->user()->id)->whereMonth('created_at', '◯')->get();
+
+        return response()->json(['reports' => $reports]);
     }
 
 }
