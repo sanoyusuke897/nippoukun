@@ -167,6 +167,6 @@ function HomeReportDefault (){
     })
 };
 
-HomeReportDefault();
+//HomeReportDefault();
 </script>
 @endsection
