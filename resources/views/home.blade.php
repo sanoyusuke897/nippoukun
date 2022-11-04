@@ -135,37 +135,37 @@
 
 // HomeReportDefault();
 
-function HomeReportDefault (){
-    $.ajax({
-        type:'POST',
-        url:'{{ route('home_default') }}',
-        data:{
-            "reportdate":$().val(),
-        },
-        dataType:'json',
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-    })
-    .done(function(data) {
+// function HomeReportDefault (){
+//     $.ajax({
+//         type:'POST',
+//         url:'{{ route('home_default') }}',
+//         data:{
+//             "reportdate":$().val(),
+//         },
+//         dataType:'json',
+//         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+//     })
+//     .done(function(data) {
 
-        console.log("default OK!");
-        let thval = $('.dateSlideList th:first').val();
-        console.log(thval);
-        let reports = data.reports;
+//         console.log("default OK!");
+//         let thval = $('.dateSlideList th:first').val();
+//         console.log(thval);
+//         let reports = data.reports;
 
-        let html = `○`;
+//         let html = `○`;
 
-        for (let item of reports) {
-            console.log(item.date)
-        }
+//         for (let item of reports) {
+//             console.log(item.date)
+//         }
 
-        $('.repotlist td').text(function(){
-        return html;
-        })
-    })
-    .fail(function (data) {
-        alert("error");
-    })
-};
+//         $('.repotlist td').text(function(){
+//         return html;
+//         })
+//     })
+//     .fail(function (data) {
+//         alert("error");
+//     })
+// };
 
 //HomeReportDefault();
 </script>
