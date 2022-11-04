@@ -61,7 +61,7 @@
                     <div class="col-sm-10">
                     <input class="form-check-input" type="checkbox" value="1" id="clocking" name="clocking" checked>
                     <label class="form-check-label" for="flexCheckChecked">退勤する</label>
-
+                    <p class="text-black-50"><small>※ KING OF TIMEと連携しています。</small></p>
                     </div>
                 </div>
                 <div class="text-center">

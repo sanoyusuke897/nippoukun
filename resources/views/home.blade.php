@@ -19,13 +19,17 @@
                 <thead class="table-bordered">
                     <tr class="dateSlideList">
                       <td scope="col" class="fw-bolder">氏名</td>
-                      <th scope="col" class="date01"><sub>（月）</sub></th>
-                      <th scope="col" class="date02"><sub>（火）</sub></th>
-                      <th scope="col" class="date03"><sub>（水）</sub></th>
-                      <th scope="col" class="date04"><sub>（木）</sub></th>
-                      <th scope="col" class="date05"><sub>（金）</sub></th>
-                      <th scope="col" class="table-secondary date06"><sub>（土）</sub></th>
-                      <th scope="col" class="table-secondary date07"><sub>（日）</sub></th>
+                      <?php
+                      $monday = "this week Monday";
+                      $tuesday = "this week Tuesday";
+                      ?>
+                      <th scope="col" class="date01"><?php echo date("m/d", strtotime("this week Monday")); ?><sub>（月）</sub></th>
+                      <th scope="col" class="date02"><?php echo date("m/d", strtotime("this week Tuesday")); ?><sub>（火）</sub></th>
+                      <th scope="col" class="date03"><?php echo date("m/d", strtotime("this week Wednesday")); ?><sub>（水）</sub></th>
+                      <th scope="col" class="date04"><?php echo date("m/d", strtotime("this week Thursday")); ?><sub>（木）</sub></th>
+                      <th scope="col" class="date05"><?php echo date("m/d", strtotime("this week Friday")); ?><sub>（金）</sub></th>
+                      <th scope="col" class="table-secondary date06 saturday-th"><?php echo date("m/d", strtotime("this week Saturday")); ?><sub>（土）</sub></th>
+                      <th scope="col" class="table-secondary date07 sunday-th"><?php echo date("m/d", strtotime("this week Sunday")); ?><sub>（日）</sub></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -102,18 +106,18 @@
 
 <script>
 //-----------日付表示-----------//
-$(function(){
-  var now = new Date();
-  var wd = ['日', '月', '火', '水', '木', '金', '土'];
+// $(function(){
+//   var now = new Date();
+//   var wd = ['日', '月', '火', '水', '木', '金', '土'];
 
-  $('.dateSlideList th').text(function(){
-    var m=now.getMonth()+1;
-    var d=now.getDate();
-    var w=wd[now.getDay()];
-    now.setDate(now.getDate()+1);
-    return m+"/"+d+"("+w+")";
-  });
-});
+//   $('.dateSlideList th').text(function(){
+//     var m=now.getMonth()+1;
+//     var d=now.getDate();
+//     var w=wd[now.getDay()];
+//     now.setDate(now.getDate()+1);
+//     return m+"/"+d+"("+w+")";
+//   });
+// });
 
 //-----------レポート表示-----------//
 
@@ -135,12 +139,17 @@ function HomeReportDefault (){
     $.ajax({
         type:'POST',
         url:'{{ route('home_default') }}',
+        data:{
+            "reportdate":$().val(),
+        },
         dataType:'json',
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
     })
     .done(function(data) {
 
         console.log("default OK!");
+        let thval = $('.dateSlideList th:first').val();
+        console.log(thval);
         let reports = data.reports;
 
         let html = `○`;
@@ -148,7 +157,6 @@ function HomeReportDefault (){
         for (let item of reports) {
             console.log(item.date)
         }
-
 
         $('.repotlist td').text(function(){
         return html;
@@ -160,6 +168,5 @@ function HomeReportDefault (){
 };
 
 HomeReportDefault();
-
 </script>
 @endsection
