@@ -17,8 +17,6 @@
         <option value="7">2022年7月の提出履歴</option>
         <option value="6">2022年6月の提出履歴</option>-->
       </select>
-
-
         <div id="daily_list">
 
         </div>

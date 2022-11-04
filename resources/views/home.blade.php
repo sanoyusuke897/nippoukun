@@ -39,7 +39,9 @@
                       <th scope="row">
                          {{ $departmentuser->name }}
                         </th>
-                      <td></td>
+                      <td>
+                        ◯
+                      </td>
                       <td></td>
                       <td></td>
                       <td></td>
@@ -148,7 +150,7 @@
 //     .done(function(data) {
 
 //         console.log("default OK!");
-//         let thval = $('.dateSlideList th:first').val();
+//         let thval = $('.dateSlideList tr:first').val();
 //         console.log(thval);
 //         let reports = data.reports;
 
@@ -167,6 +169,6 @@
 //     })
 // };
 
-//HomeReportDefault();
+// HomeReportDefault();
 </script>
 @endsection
