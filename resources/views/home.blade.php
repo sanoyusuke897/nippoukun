@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mt-5">
     <div class="row">
-        <div class="col-12 text-center">
+        <div class="col-12 text-center mb-5">
             @if (Auth::check())
             <div id="datetime" class="h1"></div>
             <h3 class="fw-bolder mt-5"><?php $user = Auth::user(); ?>{{ $user->name }}</h3>
@@ -11,92 +11,177 @@
             <button type="button" class="btn btn-warning btn-lg mt-5 fw-bolder" onclick="location.href='{{ route('create') }}'" style="width: 300px; height:100px; font-size:40px;">日報作成</button>
         </div>
 
-        <div class="col-lg-2 col-sm-12"></div>
-        <div class="col-lg-8 col-sm-12 mt-5 mb-5 dateSlide">
+        @foreach ($departmentreports as $departmentname => $reportslists)
 
-            <p class="fw-bold">▼<?php $user = Auth::user(); ?>{{ $user->department }} 週間提出状況</p>
-            <table class="table table-bordered text-center bg-white">
+        <div class="col-lg-2 col-sm-12 mt-5"></div>
+        <div class="col-lg-8 col-sm-12 mt-3 mb-3 dateSlide">
+
+                    <p class="fw-bold">▼ {{$departmentname}}の週間提出状況</p>
+
+
+            <table class="table table-bordered text-center bg-white mt-3">
                 <thead class="table-bordered">
                     <tr class="dateSlideList">
                       <td scope="col" class="fw-bolder">氏名</td>
                       <?php
-                      $monday = "this week Monday";
-                      $tuesday = "this week Tuesday";
+                        $today = date("md");
                       ?>
-                      <th scope="col" class="date01"><?php echo date("m/d", strtotime("this week Monday")); ?><sub>（月）</sub></th>
-                      <th scope="col" class="date02"><?php echo date("m/d", strtotime("this week Tuesday")); ?><sub>（火）</sub></th>
-                      <th scope="col" class="date03"><?php echo date("m/d", strtotime("this week Wednesday")); ?><sub>（水）</sub></th>
-                      <th scope="col" class="date04"><?php echo date("m/d", strtotime("this week Thursday")); ?><sub>（木）</sub></th>
-                      <th scope="col" class="date05"><?php echo date("m/d", strtotime("this week Friday")); ?><sub>（金）</sub></th>
-                      <th scope="col" class="table-secondary date06 saturday-th"><?php echo date("m/d", strtotime("this week Saturday")); ?><sub>（土）</sub></th>
-                      <th scope="col" class="table-secondary date07 sunday-th"><?php echo date("m/d", strtotime("this week Sunday")); ?><sub>（日）</sub></th>
+
+                        <th scope="col" {{ date('m/d') === date('m/d', strtotime('this week Monday')) ? 'class=date_background' : ''; }}>
+                            <?php echo date("m/d", strtotime("this week Monday")); ?>
+                            <sub>（月）</sub></span>
+                        </th>
+                        <th scope="col" {{ date('m/d') === date('m/d', strtotime('this week Tuesday')) ? 'class=date_background' : ''; }}>
+                            <?php echo date("m/d", strtotime("this week Tuesday")); ?>
+                            <sub>（火）</sub>
+                        </th>
+                        <th scope="col" {{ date('m/d') === date('m/d', strtotime('this week Wednesday')) ? 'class=date_background' : ''; }}>
+                            <?php echo date("m/d", strtotime("this week Wednesday")); ?>
+                            <sub>（水）</sub>
+                        </th>
+                        <th scope="col" {{ date('m/d') === date('m/d', strtotime('this week Thursday')) ? 'class=date_background' : ''; }}>
+                            <?php echo date("m/d", strtotime("this week Thursday")); ?>
+                            <sub>（木）</sub>
+                        </th>
+                        <th scope="col" {{ date('m/d') === date('m/d', strtotime('this week Friday')) ? 'class=date_background' : ''; }}>
+                            <?php echo date("m/d", strtotime("this week Friday")); ?>
+                            <sub>（金）</sub>
+                        </th>
+                        <th scope="col" class="table-secondary date06 saturday-th"><?php echo date("m/d", strtotime("this week Saturday")); ?><sub>（土）</sub></th>
+                        <th scope="col" class="table-secondary date07 sunday-th"><?php echo date("m/d", strtotime("this week Sunday")); ?><sub>（日）</sub></th>
                     </tr>
                   </thead>
-                  <tbody>
-                    @foreach ($departmentusers as $departmentuser)
-                    <tr class="repotlist">
 
-                      <th scope="row">
-                         {{ $departmentuser->name }}
+                  <tbody>
+
+                    @foreach ( $reportslists as $name => $lists )
+                    <tr class="repotlist">
+                        <th scope="row">
+                            {{ $name }}
                         </th>
-                      <td>
-                        ◯
-                      </td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td class="bg-light">-</td>
-                      <td class="bg-light">-</td>
+                        <?php
+
+                        //dd($reportslists);
+
+                        $test=$lists->groupBy(function ($row) {
+                            return $row->created_at->format('ymd');
+                        });
+
+
+                        $keys=$test->keys();
+
+                        //dd($test, $keys);
+                        //$test[date("ymd", strtotime("monday this week"))]->last();
+                        //dd($test[221227]);
+                        //$keys->all();
+                        //dd($keys);
+                        //dd($lists);
+
+                        //$reports=$test->last();
+
+                        //dd($reports);
+
+                        //dd($lists);
+                        //dd($lists->report);
+
+                        //dd(date("md", strtotime("Tuesday this week")));
+                        //dd($keys[0]->$reports);
+                        ?>
+
+
+                        <td {{ date('m/d') === date('m/d', strtotime('this week Monday')) ? 'class=datetd_background' : ''; }}>
+                            @if (!$test->get(date("ymd", strtotime("Monday this week"))))
+                            <span></span>
+                            @else
+                                @if ($test[date("ymd", strtotime("monday this week"))]->last()->report === 1)
+                                <span><a href="../daily_detail/{{ $test[date("ymd", strtotime("monday this week"))]->last()->did }}">○</a></span>
+                                @elseif($test[date("ymd", strtotime("monday this week"))]->last()->report === 0)
+                                <span>×</span>
+                                @endif
+                            @endif
+                        </td>
+
+                        <td {{ date('m/d') === date('m/d', strtotime('this week tuesday')) ? 'class=datetd_background' : ''; }}>
+                            @if (!$test->get(date("ymd", strtotime("tuesday this week"))))
+                            <span></span>
+                            @else
+                                @if ($test[date("ymd", strtotime("tuesday this week"))]->last()->report === 1)
+                                <span><a href="../daily_detail/{{ $test[date("ymd", strtotime("tuesday this week"))]->last()->did }}">○</a></span>
+                                @elseif($test[date("ymd", strtotime("tuesday this week"))]->last()->report === 0)
+                                <span>×</span>
+                                @endif
+                            @endif
+                        </td>
+
+                        <td {{ date('m/d') === date('m/d', strtotime('this week wednesday')) ? 'class=datetd_background' : ''; }}>
+                            @if  (!$test->get(date("ymd", strtotime("wednesday this week"))))
+                            <span></span>
+                            @else
+                                @if ($test[date("ymd", strtotime("wednesday this week"))]->last()->report === 1)
+                                <span><a href="../daily_detail/{{ $test[date("ymd", strtotime("wednesday this week"))]->last()->did }}">○</a></span>
+                                @elseif($test[date("ymd", strtotime("wednesday this week"))]->last()->report === 0)
+                                <span>×</span>
+                                @endif
+                            @endif
+                        </td>
+
+
+                        <?php
+
+                        if ($departmentname === '営業部') {
+                            //dd($test->get(0));
+                            //dd($test->get(date("ymd", strtotime("monday this week"))));
+                            //dd($test[date("ymd", strtotime("thursday this week"))]);
+                            //dd(array_keys($test->toArray()));
+                            //dd(array_keys($test->toArray()));
+                            //dd(array_filter(array_keys($test->toArray()), static function ($item) {return $item === date("ymd", strtotime("thursday this week"));}));
+                        }
+                        ?>
+
+
+                        <td {{ date('m/d') === date('m/d', strtotime('this week thursday')) ? 'class=datetd_background' : ''; }}>
+                            @if (!$test->get(date("ymd", strtotime("thursday this week"))))
+                            <span></span>
+                            @else
+                                @if ($test[date("ymd", strtotime("thursday this week"))]->last()->report === 1)
+                                <span><a href="../daily_detail/{{ $test[date("ymd", strtotime("thursday this week"))]->last()->did }}">○</a></span>
+                                @elseif($test[date("ymd", strtotime("thursday this week"))]->last()->report === 0)
+                                <span>×</span>
+                                @endif
+                            @endif
+                        </td>
+
+
+
+                        <td {{ date('m/d') === date('m/d', strtotime('this week friday')) ? 'class=datetd_background' : ''; }}>
+                            @if(!$test->get(date("ymd", strtotime("friday this week"))))
+                            <span></span>
+                            @else
+                                @if ($test[date("ymd", strtotime("friday this week"))]->last()->report === 1)
+                                <span><a href="../daily_detail/{{ $test[date("ymd", strtotime("friday this week"))]->last()->did }}">○</a></span>
+                                @elseif($test[date("ymd", strtotime("friday this week"))]->last()->report === 0)
+                                <span>×</span>
+                                @endif
+                            @endif
+                        </td>
+
+
+                        <td class="bg-light">
+                            -
+                        </td>
+                        <td class="bg-light">
+                            -
+                        </td>
                     </tr>
                     @endforeach
                   </tbody>
-
             </table>
-            <p class="text-end small"><span style="color:#00FF2A">●</span> 出勤中 / <span style="color:#ccc">●</span> 退勤中 / <span style="color:red">●</span> 打刻忘れ</p>
-
-            <!--<p class="fw-bold mt-5">▼<?php $user = Auth::user(); ?>{{ $user->department }} のタイムライン</p>
-
-<div class="list-group">
-    <div class="list-group-item list-group-item-action">
-      <div class="d-flex w-100 justify-content-between">
-        <p class="mb-1"><i class="bi bi-person-fill"></i> 深谷洋介 さんが日報を提出しました。</p>
-        <small class="text-muted">19:20:17</small>
-      </div>
-    </div>
-    <div class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-          <p class="mb-1"><i class="bi bi-person-fill"></i> 佐野祐介 さんが出勤しました。</p>
-          <small class="text-muted">19:20:17</small>
-        </div>
-      </div>
-      <div class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-          <p class="mb-1"><i class="bi bi-person-fill"></i> 青木琴音 さんが出勤しました。</p>
-          <small class="text-muted">09:01:36</small>
-        </div>
-      </div>
-      <div href="#" class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-          <p class="mb-1"><i class="bi bi-person-fill"></i> 市川良樹 さんが出勤しました。</p>
-          <small class="text-muted">08:50:36</small>
-        </div>
-      </div>
-  </div>-->
-<!--
-<form method="GET" action="" onsubmit="return false">
-<input type="text" class="efo">
-<button type="submit" id="wordbtn">send</button>
-</form>
 
 
-<form method="GET" action="" onsubmit="return false">
-    <input type="text" class="telform_classname" name="telform">
-    <button type="submit" class="telformbtn">送信</button>
-</form>
--->
         </div>
         <div class="col-lg-2 col-sm-12"></div>
+        @endforeach
+
 
         <div class="col-12">
             @else
@@ -106,69 +191,25 @@
     </div>
 </div>
 
-<script>
-//-----------日付表示-----------//
-// $(function(){a
-//   var now = new Date();
-//   var wd = ['日', '月', '火', '水', '木', '金', '土'];
+{{-- <script>
+'use strict';
 
-//   $('.dateSlideList th').text(function(){
-//     var m=now.getMonth()+1;
-//     var d=now.getDate();
-//     var w=wd[now.getDay()];
-//     now.setDate(now.getDate()+1);
-//     return m+"/"+d+"("+w+")";
-//   });
-// });
+$(function(){
+    const now = new Date();
+    const month = now.getMonth()+1;
+    const date = now.getDate();
 
-//-----------レポート表示-----------//
+    const today = month+'/'+date;
+    const day = $(".dateValue").text();
 
-// let reports = reports;
+    console.log(today);
+    console.log(day);
 
-// for (let item of reports) {
-//     console.log(item)
-// }
-
-// function HomeReportDefault (){
-//     $('.repotlist td').text(function(){
-//         return "report!";
-//     })
-// }
-
-// HomeReportDefault();
-
-// function HomeReportDefault (){
-//     $.ajax({
-//         type:'POST',
-//         url:'{{ route('home_default') }}',
-//         data:{
-//             "reportdate":$().val(),
-//         },
-//         dataType:'json',
-//         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-//     })
-//     .done(function(data) {
-
-//         console.log("default OK!");
-//         let thval = $('.dateSlideList tr:first').val();
-//         console.log(thval);
-//         let reports = data.reports;
-
-//         let html = `○`;
-
-//         for (let item of reports) {
-//             console.log(item.date)
-//         }
-
-//         $('.repotlist td').text(function(){
-//         return html;
-//         })
-//     })
-//     .fail(function (data) {
-//         alert("error");
-//     })
-// };
-
-// HomeReportDefault();
-</script>
+    if (today === day && Month === thismonth) {
+        $("th").addClass("date");
+    } else {
+        $("th").removeClass("date");
+    }
+});
+</script>--}}
 @endsection

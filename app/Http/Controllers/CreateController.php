@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facedes\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Models\Template;
 use App\Models\Dailies;
+use App\Models\Report;
 use App\Models\Draft;
 
 class CreateController extends Controller
@@ -13,8 +15,33 @@ class CreateController extends Controller
     public function index()
     {
         $templates = auth()->user()->templates;
+        //dd($templates);
         $drafts = auth()->user()->drafts->count();
-        return view('create', compact("templates", "drafts"));
+        //dd($drafts);
+
+        $today = date('Y-m-d');
+        $reports = auth()->user()->reports()->where('created_at','like',$today.'%')->orderBy('reports.id','desc')->first();
+
+
+        return view('create', compact("templates", "drafts", "reports"));
+    }
+
+    public function isReport(Request $request)
+    {
+
+
+        $date = $request->created_at;
+        Log::debug($date);
+
+        $reports = auth()->user()->reports()->where('created_at','like',$date.'%')->orderBy('reports.id','desc')->first();
+
+        if ($reports->report === 1) {
+            $flag = true;
+        } else {
+            $flag = false;
+        }
+
+        return response()->json($flag);
     }
 
     public function draft_save(Request $request)

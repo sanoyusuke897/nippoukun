@@ -31,8 +31,9 @@
                             <div class="col-md-6">
                                 <select class="form-select @error('department') is-invalid @enderror" id="department" name="department" aria-label="Default select example" required autocomplete="department" autofocus>
 
-                                    <option value="">選択してください</option>
+                                    <option value="" selected>選択してください</option>
                                     <option value="事業企画部">事業企画部</option>
+                                    <option value="営業部">営業部</option>
                                   </select>
                                 @error('department')
                                     <span class="invalid-feedback" role="alert">

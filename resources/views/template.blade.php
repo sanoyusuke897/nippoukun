@@ -15,20 +15,22 @@
 
     </thead>
     <tbody>
+
         @if ($templates->count() > 0)
-        @foreach($templates as $template)
         <thead>
             <tr>
               <th scope="col">テンプレート名</th>
               <th scope="col" class="text-end">操作</th>
             </tr>
+        @foreach($templates as $template)
+
       <tr>
         <td>{{ $template->template_title }}</td>
         <td class="text-end"><a href="{{ route('template_detail', $template->id) }}">詳細</a> | <a href="{{ route('template_edit', $template->id) }}">編集</a> | <a href="{{ route('template_delete', $template->id) }}">削除</a></td>
       </tr>
       @endforeach
       @else
-      <p class="mt-3">テンプレートがありません。</p>
+      <p class="mt-4 fw-bolder">テンプレートがありません。</p>
       @endif
     </tbody>
   </table>

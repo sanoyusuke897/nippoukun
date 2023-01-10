@@ -25,9 +25,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/create', [App\Http\Controllers\CreateController::class, 'index'])->name('create');
 Route::get('/copy_create/{daily}', [App\Http\Controllers\CreateController::class, 'copy_create'])->name('copy_create');
 Route::get('/create_confirm', [App\Http\Controllers\CreateConfirmController::class, 'index'])->name('create_confirm');
+Route::get('/create_isReport', [App\Http\Controllers\CreateController::class, 'isReport'])->name('create_isReport');
 Route::post('/create_complete', [App\Http\Controllers\CreateCompleteController::class, 'index'])->name('create_complete');
 Route::get('/list', [App\Http\Controllers\ListController::class, 'index'])->name('list');
 Route::post('/list_default', [App\Http\Controllers\ListController::class, 'list_default'])->name('list_default');
+Route::post('/list_date', [App\Http\Controllers\ListController::class, 'list_date'])->name('list_date');
 Route::post('/home_default', [App\Http\Controllers\HomeController::class, 'home_default'])->name('home_default');
 Route::get('/daily', [App\Http\Controllers\DailyController::class, 'index'])->name('daily');
 Route::get('/template', [App\Http\Controllers\TemplateController::class, 'index'])->name('template');
@@ -46,4 +48,7 @@ Route::get('/draft', [App\Http\Controllers\DraftController::class, 'index'])->na
 Route::post('/draft_save', [App\Http\Controllers\CreateController::class, 'draft_save'])->name('draft_save');
 Route::get('/draft_add', [App\Http\Controllers\CreateController::class, 'draft_add'])->name('draft_add');
 Route::post('/draft_delete', [App\Http\Controllers\CreateController::class, 'draft_delete'])->name('draft_delete');
+Route::get('/admin/index', [App\Http\Controllers\AdminController::class, 'admin'])->name('admin.index');
+Route::get('/admin_department_add', [App\Http\Controllers\AdminController::class, 'admin_department_add'])->name('admin_department_add');
+
 

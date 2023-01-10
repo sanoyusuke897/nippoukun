@@ -9,14 +9,63 @@
             <small><a href="{{ url('/daily') }}">日報</a> <i class="bi bi-chevron-right"></i> 提出履歴</small>
             <h4 class="fw-bold mt-2">提出履歴</h4>
 <div class="bg-white p-5 mt-4">
+    <p class="small">過去12ヶ月分の記録が表示できます。</p>
 
-    <select class="form-select" aria-label="Default select example" id="month" name="month">
-        <option selected value="10">2022年<?php echo date('m'); ?>月の提出履歴</option>
-        <!--<option value="9">2022年9月の提出履歴</option>
-        <option value="8">2022年8月の提出履歴</option>
-        <option value="7">2022年7月の提出履歴</option>
-        <option value="6">2022年6月の提出履歴</option>-->
-      </select>
+    <?php
+    $thisDate = date("Y年m月");
+    $thisDatevalue = date("Y-m");
+
+    //表示用
+    $lastMonth01 = date('Y年m月', strtotime('-1 month'));
+    //value用
+    $lastMonth01Value = date('Y-m', strtotime('-1 month'));
+
+
+    $lastMonth02 = date('Y年m月', strtotime('-2 month'));
+    $lastMonth02Value = date('Y-m', strtotime('-2 month'));
+    $lastMonth03 = date('Y年m月', strtotime('-3 month'));
+    $lastMonth03Value = date('Y-m', strtotime('-3 month'));
+    $lastMonth04 = date('Y年m月', strtotime('-4 month'));
+    $lastMonth04Value = date('Y-m', strtotime('-4 month'));
+    $lastMonth05 = date('Y年m月', strtotime('-5 month'));
+    $lastMonth05Value = date('Y-m', strtotime('-5 month'));
+    $lastMonth06 = date('Y年m月', strtotime('-6 month'));
+    $lastMonth06Value = date('Y-m', strtotime('-6 month'));
+    $lastMonth07 = date('Y年m月', strtotime('-7 month'));
+    $lastMonth07Value = date('Y-m', strtotime('-7 month'));
+    $lastMonth08 = date('Y年m月', strtotime('-8 month'));
+    $lastMonth08Value = date('Y-m', strtotime('-8 month'));
+    $lastMonth09 = date('Y年m月', strtotime('-9 month'));
+    $lastMonth09Value = date('Y-m', strtotime('-9 month'));
+    $lastMonth10 = date('Y年m月', strtotime('-10 month'));
+    $lastMonth10Value = date('Y-m', strtotime('-10 month'));
+    $lastMonth11 = date('Y年m月', strtotime('-11 month'));
+    $lastMonth11Value = date('Y-m', strtotime('-11 month'));
+    $lastMonth12 = date('Y年m月', strtotime('-12 month'));
+    $lastMonth12Value = date('Y-m', strtotime('-12 month'));
+    ?>
+
+    <div id="selectMonth" class="mt-3">
+        <select class="form-select" aria-label="Default select example" id="DateSelect" name="DateSelect">
+            <option selected value="<?php echo ($thisDatevalue); ?>"><?php echo ($thisDate); ?>の提出履歴</option>
+            <option value="{{ $lastMonth01Value }}"><?php echo ($lastMonth01); ?>の提出履歴</option>
+            <option value="<?php echo ($lastMonth02Value); ?>"><?php echo ($lastMonth02); ?>の提出履歴</option>
+            <option value="<?php echo ($lastMonth03Value); ?>"><?php echo ($lastMonth03); ?>の提出履歴</option>
+            <option value="<?php echo ($lastMonth04Value); ?>"><?php echo ($lastMonth04); ?>の提出履歴</option>
+            <option value="<?php echo ($lastMonth05Value); ?>"><?php echo ($lastMonth05); ?>の提出履歴</option>
+            <option value="<?php echo ($lastMonth06Value); ?>"><?php echo ($lastMonth06); ?>の提出履歴</option>
+            <option value="<?php echo ($lastMonth07Value); ?>"><?php echo ($lastMonth07); ?>の提出履歴</option>
+            <option value="<?php echo ($lastMonth08Value); ?>"><?php echo ($lastMonth08); ?>の提出履歴</option>
+            <option value="<?php echo ($lastMonth09Value); ?>"><?php echo ($lastMonth09); ?>の提出履歴</option>
+            <option value="<?php echo ($lastMonth10Value); ?>"><?php echo ($lastMonth10); ?>の提出履歴</option>
+            <option value="<?php echo ($lastMonth11Value); ?>"><?php echo ($lastMonth11); ?>の提出履歴</option>
+            <option value="<?php echo ($lastMonth12Value); ?>"><?php echo ($lastMonth12); ?>の提出履歴</option>
+        </select>
+    </div>
+
+
+
+
         <div id="daily_list">
 
         </div>
@@ -32,9 +81,59 @@
 <script>
 $(function() {
 
+    // function addOptionLastMonth () {
+    //     let select = document.getElementById("DateSelect");
+
+    //     let dt = new Date();
+    //     let year = dt.getFullYear();
+    //     let month = dt.getMonth()+1;
+
+    //     //一ヶ月前
+    //     let lastMonth = dt.setMonth(month -2);
+    //     var lastmonth = dt.getMonth()+1;
+
+    //     console.log(lastmonth);
+
+    // }
+
+    // addOptionLastMonth();
+
+    //-------年/月自動生成------//
+    // function addOption() {
+    //     let select = document.getElementById("DateSelect");
+
+    //     let thisyear = new Date();
+    //     let year =thisyear.getFullYear();
+    //     let month =thisyear.getMonth()+1;
+    //     let fragment = document.createDocumentFragment();
+
+    //     console.log( year + '年' + month + '月');
 
 
+    //    console.log("-----------");
 
+       //let last_month = thisyear.getFullYear(), thisyear.getMonth()-1, thisyear.getDate();
+       //console.log(last_month);
+
+        // for (let i=12; i >= 1; i--) {
+        //     //console.log(i);
+        //     let option = document.createElement("option");
+        //     option.text = year + "年"+ i +"月の提出履歴";
+
+        //     //console.log(option); //2022年1月の提出履歴
+        //     fragment.appendChild(option);
+        //     //console.log(fragment);
+        //     //console.log(i, fragment.firstChild.outerHTML); //2022年12月の提出履歴
+
+        //     //select.appendChild(fragment);
+        // }
+        // console.log("-----------");
+
+
+    //     select.appendChild(fragment);
+    // }
+
+    // addOption();
 
 
     //-------コピーして作成------//
@@ -69,20 +168,20 @@ $(function() {
     }
 
     //-------月別を取得------//
-    var ct = new Date();
-    var res = ct.getMonth()+1;
+    // var ct = new Date();
+    // var res = ct.getMonth()+1;
 
-    console.log(res);
+    // console.log(res);
 
-    function MonthDefault (){
-        $("[name=month]").val(res);
-    }
+    // function MonthDefault (){
+    //     $("[name=month]").val(res);
+    // }
 
-    console.log(MonthDefault);
+    // console.log(MonthDefault);
 
-    MonthDefault();
+    // MonthDefault();
 
-    //------月別提出履歴（デフォルト）-----//
+    //------月別提出履歴（デフォルト）✅✅✅✅✅✅✅✅✅-----//
     function ListDefault (){
         $.ajax({
             type:'POST',
@@ -110,24 +209,32 @@ $(function() {
     }
 
     $('select').change(function() {
-        console.log($('#month').val());
+
         $.ajax({
             type:'POST',
-            url:'{{ route('list_default') }}',
+            url:'{{ route('list_date') }}',
             dataType:'json',
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             data:{
-                month:$('#month').val(),
+                date:$('#DateSelect').val(),
             },
+
         })
         .done(function(data){
 
-            //console.log(data);
+            console.log(data);
             //console.log("data");
-            console.log(JSON.stringify(data));
-
-
+            //console.log(JSON.stringify(data));
             let dailies = data.dailies;
+            console.log(dailies);
+
+        if (dailies.length === 0) {
+            console.log('提出履歴がありません。');
+            let html = `<p class='mt-4 fw-bolder'>提出履歴がありません。</p>`
+
+            html += "";
+            daily_list_add (html);
+        } else {
 
             let html = `
             <table class="table mt-5">
@@ -155,7 +262,7 @@ $(function() {
 
             html += "<tbody></table>";
             daily_list_add (html);
-
+        }
         })
         .fail(function(data){
             alert("error");

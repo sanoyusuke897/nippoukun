@@ -15,6 +15,7 @@ class CreateConfirmController extends Controller
         $user = User::all();
         $daily = new Dailies();
         $daily->user_id = $request->user_id;
+        $daily->created_at = $request->created_at;
         $daily->report = $request->report;
         $daily->clocking = $request->clocking;
 

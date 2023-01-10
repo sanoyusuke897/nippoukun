@@ -10252,3 +10252,7 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+.date {
+    background-color: bisque;
+}

@@ -8,6 +8,14 @@
             @if (Auth::check())
             <small><a href="{{ url('daily') }}">日報</a> <i class="bi bi-chevron-right"></i> 日報作成</small>
             <h4 class="fw-bold mt-2">日報作成</h4>
+
+
+            <div class="alert alert-danger mt-4" role="alert" id="isReport">
+                ※ 既に提出済みです。
+            </div>
+
+
+            <!-- 下書きアラートSTART -->
             @if ($drafts === 0)
             @else
             <div class="alert alert-warning mt-4" id="draft-message" role="alert" data-draft="1">
@@ -17,7 +25,7 @@
                 <a href="#" class="yes_edit">はい</a>　<a href="#" class="no_edit">いいえ</a>
             </div>
             @endif
-
+            <!-- 下書きアラートEND -->
 
             <div class="bg-white p-5 mt-4" id="formarea">
                 <form method="GET">
@@ -25,45 +33,59 @@
                 <div class="mb-3 row">
                     <label for="user_id" class="col-sm-2 col-form-label fw-bold">提出者</label>
                     <div class="col-sm-10">
-                        <?php $user = Auth::user(); ?>{{ $user->name }}
+                        <p class="mt-1"><?php $user = Auth::user(); ?>{{ $user->name }}</p>
                         <input type="hidden" value="{{ $user->id }}" name="user_id">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="staticEmail" class="col-sm-2 col-form-label fw-bold">提出日付</label>
                     <div class="col-sm-10">
-                        <?php
-                        $data = date('y年m月d日');
-                        print_r($data);
-                        ?>
+                        <div class="input-group mb-3">
+                        <input type="text" name="created_at" value="{{ date('Y-m-d') }}" class="form-control" aria-describedby="basic-addon2">
+                        <script>
+                            $("[name=created_at]").datepicker({
+                                // YYYY-MM-DD形式で入力されるように設定
+                                dateFormat: 'yy-mm-dd',
+                                maxDate: new Date()
+                            });
+                        </script>
+                        <span class="input-group-text"><i class="bi bi-calendar-check-fill"></i></span>
+                        </div>
+
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="staticEmail" class="col-sm-2 col-form-label fw-bold">テンプレート</label>
                     <div class="col-sm-10">
-                        <select class="form-select" aria-label="Default select example" id="templete">
-                            <option value="">使わない</option>
-                            @foreach ($templates as $template)
-                            <option value="{{ $template->template_content }}">{{ $template->template_title }}</option>
-                            @endforeach
-                        </select>
-                        <p class="text-end small mt-2"><i class="bi bi-plus-square"></i>&nbsp;&nbsp;<a href="{{ url('/template') }}">テンプレート管理</a></p>
-                    </div>
+                        <div class="row">
+                            <div class="col-8">
+                            <select class="form-select" aria-label="Default select example" id="templete">
+                                <option value="">使わない</option>
+                                @foreach ($templates as $template)
+                                <option value="{{ $template->template_content }}">{{ $template->template_title }}</option>
+                                @endforeach
+                            </select>
+                            </div>
+                            <div class="col-4">
+                            <p class="text-end small mt-2"><i class="bi bi-plus-square"></i>&nbsp;&nbsp;<a href="{{ url('/template') }}">テンプレート管理</a></p>
+                            </div>
+                        </div>
                 </div>
-                <div class="mb-3 row">
+                </div>
+                <div class="mb-5 row">
                     <label for="report" class="col-sm-2 col-form-label fw-bold">業務内容</label>
                     <div class="col-sm-10">
                         <textarea class="form-control" id="report" data="templates" name="report" style="height: 400px" type="text">{{ old('report') }}</textarea>
                     </div>
                 </div>
-                <div class="mb-3 row">
+                {{-- <div class="mb-3 row">
                     <label for="inputPassword" class="col-sm-2 col-form-label fw-bold">打刻</label>
                     <div class="col-sm-10">
                     <input class="form-check-input" type="checkbox" value="1" id="clocking" name="clocking" checked>
                     <label class="form-check-label" for="flexCheckChecked">退勤する</label>
                     <p class="text-black-50"><small>※ KING OF TIMEと連携しています。</small></p>
                     </div>
-                </div>
+                </div> --}}
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary" formaction="{{route('create_confirm')}}">確認画面へ</button>　　　
                     <a class="btn btn-secondary" id="draft_btn" onsubmit="return false">下書き保存</a> <!--ajaxならsubmitはダメ！-->
@@ -149,7 +171,7 @@ $(function() {
     });
 
     //------テンプレート挿入------
-    $('select').change(function() {
+    $('#templete').change(function() {
         var val = $(this).val();
         $('#report').val(val);
     });
@@ -189,7 +211,37 @@ $(function() {
 
     //------提出後に下書きを削除------
 
+     //------日付が変更されたら問い合わせる（2重投稿防止）------
 
+    function isReport() {
+        $.ajax({
+            type:'GET',
+            url:'{{ route('create_isReport') }}',
+            dataType:'json',
+            data:{
+                "created_at":$("[name=created_at]").val()
+            },
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        })
+        .done(function(data){
+            console.log(data);
+            if (data) {
+                $('#isReport').show();
+            } else {
+                $('#isReport').hide();
+            }
+        })
+        .fail(function(data){
+            alert('error');
+        })
+    }
+
+
+    $('[name=created_at]').change(function() {
+        isReport();
+    });
+
+    isReport();
 
 
 

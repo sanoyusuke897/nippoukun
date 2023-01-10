@@ -6,7 +6,6 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>@yield('title') | {{ config('app.name') }}</title>
     <link rel="icon" href="/images/favicon.svg" type="image/vnd.microsoft.icon">
 
@@ -17,8 +16,16 @@
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.esm.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <!-- jQuery本体-->
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!-- Datepicker日本語化 -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+
 
     <!-- Styles -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -29,7 +36,8 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <!--{{ config('app.name', 'Laravel') }}-->
+                    <img src="{{ asset('images/nippoukunlogo.svg') }}" alt="" width="250">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -38,7 +46,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -86,11 +93,11 @@
                                 </a>
                                   <!-- 設定メニュー -->
                                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown_setting">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    {{-- <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                   document.getElementById('logout-form').submit();">
                                      {{ __('パスワード変更') }}
-                                 </a>
+                                 </a> --}}
 
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -114,6 +121,9 @@
             @yield('content')
         </main>
     </div>
-    <div class="bg-secondary p-2 text-center text-light"><small>Copyright(c) 2022 Alivenet, Inc. All Rights Reserved.</small></div>
+    <div class="bg-secondary p-2 text-center text-light">
+        <img src="{{ asset('images/nippoukunlogo-white.svg') }}" alt="" width="120"><br>
+        <small>Copyright&copy; 2022 Alivenet, Inc. All Rights Reserved.</small>
+        </div>
 </body>
 </html>

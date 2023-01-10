@@ -12,7 +12,8 @@ class Report extends Model
     protected $casts = [
         'user_id',
         'daily_id',
-        'report'
+        'report',
+        'created_at' => 'datetime:Y-m-d'
     ];
 
     public function user()

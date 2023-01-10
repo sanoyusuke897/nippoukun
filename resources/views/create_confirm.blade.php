@@ -14,27 +14,25 @@
             <div class="mb-3 row">
                 <label for="staticEmail" class="col-sm-2 col-form-label fw-bold">提出者</label>
                 <div class="col-sm-10">
-                    {{ $daily->user->name }}
+                    <p class="mt-1">{{ $daily->user->name }}</p>
                   <input type="hidden" value="<?php $user = Auth::user(); ?>{{ $user->id }}" name="user_id">
                 </div>
               </div>
               <div class="mb-3 row">
                 <label for="staticEmail" class="col-sm-2 col-form-label fw-bold">提出日付</label>
                 <div class="col-sm-10">
-                    <?php
-                    $data = date('y年m月d日');
-                    print_r($data);
-                    ?>
+                    <p class="mt-1">{{ $daily->created_at }}</p>
+                    <input type="hidden" value="{{ $daily->created_at }}" name="created_at">
                 </div>
               </div>
               <div class="mb-3 row">
                 <label for="inputPassword" class="col-sm-2 col-form-label fw-bold">業務内容</label>
                 <div class="col-sm-10">
-                    <p>{{ $daily->report }}</p>
+                    <p class="mt-1">{{ $daily->report }}</p>
                     <input type="hidden" value="{{ $daily->report }}" name="report">
                 </div>
               </div>
-              <div class="mb-3 row">
+              {{-- <div class="mb-3 row">
                 <label for="inputPassword" class="col-sm-2 col-form-label fw-bold">打刻</label>
                 <div class="col-sm-10">
 
@@ -45,7 +43,7 @@
                     @endif
                     <input type="hidden" value="{{ $daily->clocking }}" name="clocking">
                 </div>
-              </div>
+              </div> --}}
               <div class="text-center">
               <button type="submit" class="btn btn-primary">提出</button>
               <button type="button" class="btn btn-secondary" onClick="history.back()">前へ戻る</button>
