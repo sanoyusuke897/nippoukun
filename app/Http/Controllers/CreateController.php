@@ -31,11 +31,16 @@ class CreateController extends Controller
 
 
         $date = $request->created_at;
-        Log::debug($date);
+        //Log::debug($date);
 
-        $reports = auth()->user()->reports()->where('created_at','like',$date.'%')->orderBy('reports.id','desc')->first();
+        $reports = auth()->user()
+                    ->reports()
+                    ->where('created_at','like',$date.'%')
+                    ->where('report',1)
+                    ->orderBy('reports.id','desc')
+                    ->first();
 
-        if ($reports->report === 1) {
+        if ($reports) {
             $flag = true;
         } else {
             $flag = false;
