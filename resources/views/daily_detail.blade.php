@@ -27,12 +27,12 @@
                     <p>{{ $daily->report }}</p>
                 </div>
               </div>
-              <div class="mb-3 row">
+              {{-- <div class="mb-3 row">
                 <label for="inputPassword" class="col-sm-2 col-form-label fw-bold">打刻</label>
                 <div class="col-sm-10">
                     {{ $daily->clocking }} 退勤する
                 </div>
-              </div>
+              </div> --}}
               <hr>
               @if (count($likes) === 0)
               <button type="button" class="btn btn-outline-dark btn-sm" id="like_btn"><i class="bi bi-heart"></i> いいね！</button>
